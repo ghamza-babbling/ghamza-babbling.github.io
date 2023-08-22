@@ -5,12 +5,17 @@ theme = "no-style-please"
 title = "Ghamza babbling"
 description = "Just me writing words"
 generate_feed = true
+taxonomies = [{ name = "tags" }, { name = "categories" }, { name = "contexts" }]
 
 [markdown]
 highlight_code = true
 
 [extra]
 list_pages = true
-header_nav = [{ name = "~home", url = "/" }]
+header_nav = [
+    { name = "home", url = "/" },
+    { name = "tags", url = "/tags" },
+    { name = "rss", url = "/atom.xml" },
+]
 add_toc = true
 logo = "images/gray-icon.png"

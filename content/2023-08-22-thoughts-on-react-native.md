@@ -1,5 +1,7 @@
 ---
 title: "Thoughts on React Native"
+taxonomies:
+  tags: ["tech_thoughts", "react_native", "mobile_development"]
 ---
 I often find people comparing native Android and iOS vs. React Native (RN) and saying they're more performant than RN. Well, if you need performance, use C.
 
