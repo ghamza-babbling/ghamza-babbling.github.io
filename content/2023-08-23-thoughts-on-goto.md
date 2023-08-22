@@ -128,3 +128,5 @@ In fact, [Chris Gillum summarized the possible uses of `goto`](https://stackover
 And maybe:
 
 - Error Handling using `try-catch` (But languages are adopting the function model with `Result`)
+
+So it turns out the `echo.c` uses goto to cleanly exiting a function.
