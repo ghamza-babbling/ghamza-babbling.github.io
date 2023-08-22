@@ -13,3 +13,4 @@ highlight_code = true
 list_pages = true
 header_nav = [{ name = "~home", url = "/" }]
 add_toc = true
+logo = "images/gray-icon.png"
