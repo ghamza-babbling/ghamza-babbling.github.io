@@ -10,4 +10,4 @@ The Linux kernel (the most significant software project humanity has done so far
 
 There is a saying by Linus Torvalds. I can't find the exact words to it, but it means that some companies talk about the direction of political correctness to the extent of not being about software anymore.
 
-If I can rename the default branch, it will name it `senpai`.
+If I can rename the default branch on GitHub, it will name it `senpai`.
