@@ -1,11 +1,11 @@
 ---
-title: "Plestine - Why I see you in everything?"
+title: "Palestine - Why I see you in everything?"
 taxonomies:
   tags: ["palestine"]
 ---
 
 ```html
-<plestine>
+<palestine>
                        wh
                       why
                 why I see y
