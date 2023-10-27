@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>Thoughts on goto</title>
+        
+        <meta name="title" content="Thoughts on goto">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/thoughts-on-goto/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="Thoughts on goto">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/thoughts-on-goto/">
+        <meta property="twitter:title" content="Thoughts on goto">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/thoughts-on-goto/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/thoughts-on-goto/",
+                "@type":"WebSite",
+                "headline":"Thoughts on goto",
+                "name":"Thoughts on goto",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/thoughts-on-goto</p>
+<p class="post-meta"><time datetime="2023-08-23">2023-08-23</time></p>
+<h1>Thoughts on goto</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<p>I wanted to learn production C programming and was pointed towards reading simple FreeBSD utils, like <code>echo.c</code> and <code>cat.c</code>.</p>
+<p><a href="http://git.savannah.gnu.org/gitweb/?p=coreutils.git;a=blob_plain;f=src/echo.c;hb=HEAD"><code>echo.c</code></a> should be easier so lemme start with that. Well, the <code>goto</code>s were a deal breaker. Who uses <code>goto</code> in 2023?</p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">for (i = 0; temp[i]; i++)
+    switch (temp[i])
+    {
+    case &#x27;e&#x27;: case &#x27;E&#x27;: case &#x27;n&#x27;:
+        break;
+    default:
+        goto just_echo;
+    }
+
+if (i == 0)
+    goto just_echo;
+
+&#x2F;* ... *&#x2F;
+
+just_echo:
+
+  if (do_v9 || posixly_correct)
+    {
+      while (argc &gt; 0)
+        {
+          char const *s = argv[0];
+          unsigned char c;
+&#x2F;* ... *&#x2F;
+</code></pre>
+<p>This is madness!</p>
+<p>Well, no. <code>goto</code> is a tool. Indeed it breaks the control flow. But sometimes, we do need to break it.</p>
+<h2 id="try-catch-blocks">try-catch blocks</h2>
+<p>Well, a <code>try-catch</code> block or <code>do-catch</code> in languages like Swift are an application of a <code>goto</code>. We go to the <code>catch</code> block if a failable operation fails. It crealy interrupts the control flow same as <code>goto</code> does, but people accept that because it has good deeds and can't be abused as much as <code>goto</code>.</p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">static int failableFunc() throws Exception {
+    Exception up = new Exception();
+    throw up;
+}
+
+public static void main(String[] args) {
+    try {
+        failableFunc();
+        System.out.println(&quot;Program will `goto` the catch block, so I&#x27;m skipped&quot;);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+</code></pre>
+<p>Rust took another approach by making failable operations return a <code>Result</code> that can either be an <code>Ok(value)</code> or <code>Err(why)</code>. So we either have to handle the error on the same line and not interrupt the control flow or bubble up the error so we can handle the error in the high-level modules.</p>
+<h2 id="labeled-loops">labeled loops</h2>
+<p>Rust also breaks the control flow by having labeled loops, so we can break from the entirety of nested loops without having flags and smelly code.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">&#x27;outer: loop {
+    println!(&quot;Entered the outer loop&quot;);
+
+    &#x27;inner: loop {
+        println!(&quot;Entered the inner loop&quot;);
+
+        &#x2F;&#x2F; This would break only the inner loop
+        &#x2F;&#x2F;break;
+
+        &#x2F;&#x2F; This breaks the outer loop
+        break &#x27;outer;
+    }
+
+    println!(&quot;This point will never be reached&quot;);
+}
+</code></pre>
+<p>Java also can label loops.</p>
+<pre data-lang="java" class="language-java "><code class="language-java" data-lang="java">outer: for(;;) {
+   inner: for(;;) {
+     break outer;
+   }
+}
+</code></pre>
+<h2 id="cleanup">Cleanup</h2>
+<p>Swift and Go uses <code>defer</code>, a block that runs at the end of a function to clean up resources, for example.</p>
+<pre data-lang="swift" class="language-swift "><code class="language-swift" data-lang="swift">func writeLog() {
+    let file = openFile()
+    defer { closeFile(file) } &#x2F;* Will be executed at the end *&#x2F;
+
+    &#x2F;* write to file *&#x2F;
+}
+</code></pre>
+<pre data-lang="go" class="language-go "><code class="language-go" data-lang="go">func writeLog() {
+    f := createFile(&quot;&#x2F;tmp&#x2F;defer.txt&quot;)
+    defer closeFile(f)
+
+    &#x2F;* write to file *&#x2F;
+}
+</code></pre>
+<p>Why Swift and Go have such a keyword? To have a single block of cleaning resources while multiple branches that lead to exit the function.</p>
+<h2 id="conclution">Conclution</h2>
+<p><code>goto</code>s are similar to Rust's unsafe, we should avoid them in our day-to-day, but when the time comes, they're tools to help us solve problems.</p>
+<p>In fact, <a href="https://stackoverflow.com/a/24476/8943195">Chris Gillum summarized the possible uses of <code>goto</code></a>, which are:</p>
+<ul>
+<li>Cleanly exiting a function (what Swift does)</li>
+<li>Exiting nested loops (what Java and Rust do)</li>
+<li>Low-level performance improvements (what system and game devs do)</li>
+</ul>
+<p>And maybe:</p>
+<ul>
+<li>Error Handling using <code>try-catch</code> (But languages are adopting the function model with <code>Result</code>)</li>
+</ul>
+<p>So it turns out the <code>echo.c</code> uses goto to cleanly exiting a function.</p>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/tech-thoughts">#tech_thoughts</a>
+
+<a href="/tags/programming">#programming</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        

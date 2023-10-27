@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>Building ghit - Part 1</title>
+        
+        <meta name="title" content="Building ghit - Part 1">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/ghit-part-1/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="Building ghit - Part 1">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/ghit-part-1/">
+        <meta property="twitter:title" content="Building ghit - Part 1">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/ghit-part-1/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/ghit-part-1/",
+                "@type":"WebSite",
+                "headline":"Building ghit - Part 1",
+                "name":"Building ghit - Part 1",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/ghit-part-1</p>
+<p class="post-meta"><time datetime="2023-08-24">2023-08-24</time></p>
+<h1>Building ghit - Part 1</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<p>Building ghit (Ghamza git - ghit :D) in Rust. Indeed not a step-by-step tutorial, just following <a href="https://shop.jcoglan.com/building-git/">Bulding git book</a> but switched to Rust instead of Ruby and having a different architecture.</p>
+<h2 id="the-architecture">The Architecture</h2>
+<p>I made a cargo workspace. Each member of the workspace has its responsibility. I've created a <code>ghit_core</code> library, which, as the name stands, is a core library that should be reusable by other apps or libs—and created <code>ghit_cli</code>, which parses the CLI arguments and passes them to the <code>core</code>. This approach should be extensible; for the future, we may add <code>ghit_gui</code> that displays some nice diffs and buttons to make <code>ghit</code> operations.</p>
+<pre data-lang="text" class="language-text "><code class="language-text" data-lang="text">+----------------------+
+|       ghit core      |
++----------------------+
+   ↑        ↑        ↑
+  uses     uses     uses
+   |        |        |
++-----+  +-----+  +-----+
+| cli |  | gui |  | web |
++-----+  +-----+  +-----+
+</code></pre>
+<h2 id="setup">Setup</h2>
+<p>I've set up a rust workspace by creating a directory and creating a rust <code>lib</code> and a <code>bin</code> and adding them as members.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">mkdir ghit
+cd ghit
+cargo new --lib ghit_core --vcs none
+cargo new --bin ghit_cli --vcs none
+touch Cargo.toml
+</code></pre>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">[workspace]
+members = [&quot;ghit_cli&quot;, &quot;ghit_core&quot;]
+</code></pre>
+<p>And then make <code>ghit_cli</code> depends on <code>ghit_core</code>.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">cargo add -p ghit_cli ghit_core --path ghit_core&#x2F;
+</code></pre>
+<p>For libraries, I use <code>thiserror</code> for error propagation, and for binaries, I use <code>anyhow</code>
+And <code>clap</code> with the <code>derive</code> feature for <code>ghit_cli</code> to parse command line args. (I've created a <a href="https://blog.ghamza.dev/posts/rust-cli/">tutorial on how to create Rust CLI apps</a> some time ago).
+They're famous in the Rust ecosystem.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">cargo add -p ghit_core thiserror
+cargo add -p ghit_cli anyhow
+cargo add -p ghit_cli clap --features derive
+</code></pre>
+<p>I've set up the error struct in the lib.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">&#x2F;* error.rs *&#x2F;
+#[derive(thiserror::Error, Debug)]
+pub enum GhitError {}
+</code></pre>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">&#x2F;* prelude.rs *&#x2F;
+pub use crate::error::GhitError;
+
+pub type GhitResult&lt;T&gt; = core::result::Result&lt;T, GhitError&gt;;
+</code></pre>
+<p>And now I was good to go to start with the first <code>ghit</code> command, the <code>init</code>.</p>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/building-git">#building_git</a>
+
+<a href="/tags/programming">#programming</a>
+
+<a href="/tags/rust">#rust</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        

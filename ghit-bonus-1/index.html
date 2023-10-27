@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>Building ghit - Bonus 1</title>
+        
+        <meta name="title" content="Building ghit - Bonus 1">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/ghit-bonus-1/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="Building ghit - Bonus 1">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/ghit-bonus-1/">
+        <meta property="twitter:title" content="Building ghit - Bonus 1">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/ghit-bonus-1/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/ghit-bonus-1/",
+                "@type":"WebSite",
+                "headline":"Building ghit - Bonus 1",
+                "name":"Building ghit - Bonus 1",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/ghit-bonus-1</p>
+<p class="post-meta"><time datetime="2023-09-24">2023-09-24</time></p>
+<h1>Building ghit - Bonus 1</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<p>I wanted to examine <code>Bazel</code> in my free time, and it may be a good fit for a multi-language and multi-platform project I'm working on. And that's what Bazel is trying to solve.</p>
+<p>So here we go, <code>bazel</code> in <code>ghit</code> :D</p>
+<h2 id="workspace-setup">Workspace Setup</h2>
+<p>I've installed <code>bazel</code> using <code>bazelisk</code>, then created <code>WORKSPACE.bazel</code> at the project's root dir.</p>
+<p>Then I added the <code>rules_rust</code> by loading the <code>http_archive</code>.</p>
+<pre data-lang="starlark" class="language-starlark "><code class="language-starlark" data-lang="starlark"># .&#x2F;WORKSPACE.bazel
+load(&quot;@bazel_tools&#x2F;&#x2F;tools&#x2F;build_defs&#x2F;repo:http.bzl&quot;, &quot;http_archive&quot;)
+
+http_archive(
+    name = &quot;rules_rust&quot;,
+    sha256 = &quot;db89135f4d1eaa047b9f5518ba4037284b43fc87386d08c1d1fe91708e3730ae&quot;,
+    urls = [&quot;https:&#x2F;&#x2F;github.com&#x2F;bazelbuild&#x2F;rules_rust&#x2F;releases&#x2F;download&#x2F;0.27.0&#x2F;rules_rust-v0.27.0.tar.gz&quot;],
+)
+</code></pre>
+<p><code>load</code> is similar to <code>import</code> in other languages. And the params of the <code>http_archive</code> I got those from <code>rules_rust</code> GitHub release. <a href="https://github.com/bazelbuild/rules_rust/releases">https://github.com/bazelbuild/rules_rust/releases</a></p>
+<p>Now add <code>rules_rust</code> dependencies using <code>rules_rust_dependencies()</code> and register the rust toolchain.</p>
+<p>We can specify release channels, editions, and versions in the toolchain. I've only selected 2021's edition.</p>
+<pre data-lang="starlark" class="language-starlark "><code class="language-starlark" data-lang="starlark"># .&#x2F;WORKSPACE.bazel
+load(&quot;@bazel_tools&#x2F;&#x2F;tools&#x2F;build_defs&#x2F;repo:http.bzl&quot;, &quot;http_archive&quot;)
+
+http_archive(
+    name = &quot;rules_rust&quot;,
+    sha256 = &quot;db89135f4d1eaa047b9f5518ba4037284b43fc87386d08c1d1fe91708e3730ae&quot;,
+    urls = [&quot;https:&#x2F;&#x2F;github.com&#x2F;bazelbuild&#x2F;rules_rust&#x2F;releases&#x2F;download&#x2F;0.27.0&#x2F;rules_rust-v0.27.0.tar.gz&quot;],
+)
+
+load(&quot;@rules_rust&#x2F;&#x2F;rust:repositories.bzl&quot;, &quot;rules_rust_dependencies&quot;, &quot;rust_register_toolchains&quot;)
+
+rules_rust_dependencies()
+
+rust_register_toolchains(
+    edition = &quot;2021&quot;,
+)
+</code></pre>
+<p>Then, we need to list the dependencies we're using. For example, if we're using <code>anyhow</code>, we should put that in the <code>WORKSPACE.bazel</code>, but this is painful, so we'll rely on <code>crate_universe</code> to do that for us!</p>
+<pre data-lang="starlark" class="language-starlark "><code class="language-starlark" data-lang="starlark">load(&quot;@rules_rust&#x2F;&#x2F;crate_universe:repositories.bzl&quot;, &quot;crate_universe_dependencies&quot;)
+
+crate_universe_dependencies()
+
+load(&quot;@rules_rust&#x2F;&#x2F;crate_universe:defs.bzl&quot;, &quot;crates_repository&quot;)
+
+crates_repository(
+    name = &quot;crate_index&quot;,
+    cargo_lockfile = &quot;&#x2F;&#x2F;:Cargo.lock&quot;,
+    lockfile = &quot;&#x2F;&#x2F;:cargo-bazel-lock.json&quot;,
+    manifests = [
+        &quot;&#x2F;&#x2F;:Cargo.toml&quot;,
+        &quot;&#x2F;&#x2F;:ghit_core&#x2F;Cargo.toml&quot;,
+        &quot;&#x2F;&#x2F;:ghit_cli&#x2F;Cargo.toml&quot;,
+    ],
+)
+
+load(&quot;@crate_index&#x2F;&#x2F;:defs.bzl&quot;, &quot;crate_repositories&quot;)
+
+crate_repositories()
+</code></pre>
+<p>We gave the <code>crates_repository</code> a custom name, <code>crate_index</code>, and we specified the <code>cargo_lockfile</code> to be the actual <code>Cargo.lock</code> file since we're using a cargo workspace then there's only this single lock file. And we should specify bazel's lockfile and create that later. And finally, set the <code>Cargo.toml</code> files. Bazel can automatically generate dependencies.</p>
+<p>Then I created <code>cargo-bazel-lock.json</code>.</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">touch cargo-bazel-lock.json
+</code></pre>
+<p>And I've pinned the dependencies to that file.</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index
+</code></pre>
+<p>When dependencies change, we should sync again.</p>
+<h2 id="library-setup">Library Setup</h2>
+<p>Now we want to setup our lib, which is <code>ghit_core</code>.</p>
+<pre data-lang="starlark" class="language-starlark "><code class="language-starlark" data-lang="starlark"># .&#x2F;ghit_core&#x2F;BUILD.bazel
+
+load(&quot;@crate_index&#x2F;&#x2F;:defs.bzl&quot;, &quot;aliases&quot;, &quot;all_crate_deps&quot;)
+load(&quot;@rules_rust&#x2F;&#x2F;rust:defs.bzl&quot;, &quot;rust_library&quot;)
+
+rust_library(
+    name = &quot;ghit_core&quot;,
+    srcs = glob([
+        &quot;src&#x2F;**&#x2F;*.rs&quot;,
+    ]),
+    aliases = aliases(),
+    deps = all_crate_deps(),
+    visibility = [&quot;&#x2F;&#x2F;visibility:public&quot;],
+)
+</code></pre>
+<p>Here, I've included the <code>all_crate_deps</code> to also generate dependencies depending on what we provide in <code>Cargo.toml</code>, and the <code>aliases</code> here are needed in case we've used dependency renaming, say:</p>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">ghit_lib = { package = &quot;ghit_core&quot;, path = &quot;..&#x2F;ghit_core&quot; }
+</code></pre>
+<p>Otherwise, we need to define our aliases explicitly.</p>
+<p>And finally, we've included the <code>rust_library</code> to build a rust lib. We give it a name, sources to be everything with <code>.rs</code> inside <code>src/</code> recursively, and public visibility.</p>
+<h2 id="binary-setup">Binary Setup</h2>
+<p>Similar to the lib setup, we add the <code>ghit_core</code> as a dependency and use <code>rust_binary</code> instead of <code>rust_library</code>.</p>
+<pre data-lang="starlark" class="language-starlark "><code class="language-starlark" data-lang="starlark">load(&quot;@crate_index&#x2F;&#x2F;:defs.bzl&quot;, &quot;aliases&quot;, &quot;all_crate_deps&quot;)
+load(&quot;@rules_rust&#x2F;&#x2F;rust:defs.bzl&quot;, &quot;rust_binary&quot;)
+
+rust_binary(
+    name = &quot;ghit_cli&quot;,
+    srcs = glob([
+        &quot;src&#x2F;**&#x2F;*.rs&quot;,
+    ]),
+    aliases = aliases(),
+    deps = all_crate_deps() + [
+        &quot;&#x2F;&#x2F;ghit_core&quot;
+    ],
+    visibility = [&quot;&#x2F;&#x2F;visibility:public&quot;],
+)
+</code></pre>
+<p>Finally, I created <code>BUILD.bazel</code> in the root dir, beside <code>WORKSPACE.bazel</code>, and I ran:</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">bazel build &#x2F;&#x2F;ghit_cli:ghit_cli
+.&#x2F;bazel-bin&#x2F;ghit_cli&#x2F;ghit_cli
+</code></pre>
+<hr />
+<h2 id="credits">Credits</h2>
+<p>Thanks to <a href="https://www.tweag.io/blog/2023-07-27-building-rust-workspace-with-bazel/">https://www.tweag.io/blog/2023-07-27-building-rust-workspace-with-bazel/</a>. It helped a lot! (There is some missing stuff in their tutorial, but they provided a link to the repo, so I was able to fill in the blank).</p>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/building-git">#building_git</a>
+
+<a href="/tags/programming">#programming</a>
+
+<a href="/tags/rust">#rust</a>
+
+<a href="/tags/bazel">#bazel</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        

@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>Building ghit - Part 2</title>
+        
+        <meta name="title" content="Building ghit - Part 2">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/ghit-part-2/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="Building ghit - Part 2">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/ghit-part-2/">
+        <meta property="twitter:title" content="Building ghit - Part 2">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/ghit-part-2/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/ghit-part-2/",
+                "@type":"WebSite",
+                "headline":"Building ghit - Part 2",
+                "name":"Building ghit - Part 2",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/ghit-part-2</p>
+<p class="post-meta"><time datetime="2023-08-25">2023-08-25</time></p>
+<h1>Building ghit - Part 2</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<p>I've created init function in the core, which takes a relative path, creates the <code>.git</code> directory, and returns the absolute path for the <code>.git</code> dir.</p>
+<p>We will create a <code>.git</code>, and inside it, we will create <code>objects</code> and <code>refs</code>. When running <code>git init</code>, we get a <code>.git</code> with <code>objects</code> and <code>refs</code>. We're mimicing git ¯\<em>(ツ)</em>/¯.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">&#x2F;&#x2F;&#x2F; Initializes a new Ghit repo at the provided relative path
+&#x2F;&#x2F;&#x2F;
+&#x2F;&#x2F;&#x2F; Returns the absolute path to the `.git` directory
+&#x2F;&#x2F;&#x2F;
+&#x2F;&#x2F;&#x2F; # Errors
+&#x2F;&#x2F;&#x2F;
+&#x2F;&#x2F;&#x2F; Returns an [`GhitError`] if the current working directory value is invalid. Possible cases:
+&#x2F;&#x2F;&#x2F; - Current directory does not exist.
+&#x2F;&#x2F;&#x2F; - There are insufficient permissions to access the current directory.
+pub fn init(repo_path: &amp;str) -&gt; GhitResult&lt;PathBuf&gt; {
+    let current_dir = std::env::current_dir()?;
+    let git_dir = pathbuf![current_dir, repo_path, &quot;.git&quot;];
+    fs::create_dir_all(&amp;git_dir)?;
+    let directories = [&quot;objects&quot;, &quot;refs&quot;];
+    for dir in directories {
+        fs::create_dir(pathbuf![&amp;git_dir, dir])?;
+    }
+    Ok(git_dir)
+}
+</code></pre>
+<p>Two things to notice here:</p>
+<ol>
+<li>The usage of <code>pathbuf![]</code> macro.</li>
+<li>The <code>?</code> operator.</li>
+</ol>
+<p>The <code>pathbuf![]</code> macro is a util macro I created to make it easier to create <code>PathBuf</code> objects with array-like syntax.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">#[macro_export]
+macro_rules! pathbuf {
+    ($($path: expr),*) =&gt; {{
+        let mut pathbuf = ::std::path::PathBuf::new();
+        $(pathbuf.push($path);)*
+        pathbuf
+    }}
+}
+</code></pre>
+<p>And the <code>?</code> operator propagates errors so the client app can handle that and display the proper message.</p>
+<p>I've wrapped the <code>io</code> errors using the <code>thiserror</code> crate for error handling.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">#[derive(thiserror::Error, Debug)]
+pub enum GhitError {
+    #[error(&quot;IO - {0}&quot;)]
+    Io(#[from] std::io::Error),
+}
+</code></pre>
+<p>Bam! An out-of-the-box good enough error handling for our client when combining it with <code>anyhow</code>.</p>
+<h2 id="cli">CLI</h2>
+<p>For this CLI tool, I've applied the same approach in <a href="https://blog.ghamza.dev/posts/rust-cli/">my blog post</a> for building CLI tools in Rust.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">#[derive(Subcommand)]
+pub enum Ghit {
+    &#x2F;&#x2F;&#x2F; Initializes a ghit repo
+    Init {
+        #[clap(default_value_t = String::new())]
+        path: String,
+    },
+}
+
+impl Ghit {
+    pub fn exec(&amp;self) -&gt; anyhow::Result&lt;()&gt; {
+        match self {
+            Self::Init { path } =&gt; {
+                let ghit_dir = ghit_core::init::init(&amp;path)?;
+                println!(
+                    &quot;Initialized empty Ghit repository in {}&quot;,
+                    ghit_dir.to_string_lossy()
+                );
+                Ok(())
+            }
+        }
+    }
+}
+</code></pre>
+<p>Also the same technique to alias commands.</p>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml"># .cargo&#x2F;config.toml
+[alias]
+ghit = [&quot;run&quot;, &quot;-rq&quot;, &quot;--bin&quot;, &quot;ghit_cli&quot;, &quot;--&quot;]
+</code></pre>
+<p>Now, I can run it on the happy and error paths.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">cargo ghit init
+# Initialized empty Ghit repository in &#x2F;Users&#x2F;hamzajadid&#x2F;Workspace&#x2F;ghit&#x2F;.git
+</code></pre>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">mkdir should_fail
+sudo chown root should_fail
+cargo ghit init should_fail
+# Error: IO - Permission denied (os error 13)
+</code></pre>
+<p>Only this bit bothers me:</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">Init {
+    #[clap(default_value_t = String::new())]
+    path: String,
+},
+</code></pre>
+<p>By having a default, the help message looks janky.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">cargo ghit init --help
+</code></pre>
+<pre data-lang="text" class="language-text "><code class="language-text" data-lang="text">Initializes a ghit repo
+
+Usage: ghit_cli init [PATH]
+
+Arguments:
+  [PATH]  [default: ]
+
+Options:
+  -h, --help  Print help
+</code></pre>
+<p>A fix for it should be the first thing I discuss next time.</p>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/building-git">#building_git</a>
+
+<a href="/tags/programming">#programming</a>
+
+<a href="/tags/rust">#rust</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        

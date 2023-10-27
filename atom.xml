@@ -1,0 +1,927 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+    <title>Ghamza babbling</title>
+    <subtitle>Just me writing words</subtitle>
+    <link href="https://ghamza-babbling.github.io/atom.xml" rel="self" type="application/atom+xml"/>
+    <link href="https://ghamza-babbling.github.io"/>
+    <generator uri="https://www.getzola.org/">Zola</generator>
+    <updated>2023-10-28T00:00:00+00:00</updated>
+    <id>https://ghamza-babbling.github.io/atom.xml</id>
+    <entry xml:lang="en">
+        <title>From the River to The Sea</title>
+        <published>2023-10-28T00:00:00+00:00</published>
+        <updated>2023-10-28T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/from-the-river-to-the-sea/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/from-the-river-to-the-sea/</id>
+        
+        <content type="html">&lt;pre data-lang=&quot;html&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&amp;lt;river&amp;gt;
+    Palestine
+&amp;lt;&amp;#x2F;sea&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Palestine - Why I see you in everything?</title>
+        <published>2023-10-27T00:00:00+00:00</published>
+        <updated>2023-10-27T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/why-i-see-you-in-everything/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/why-i-see-you-in-everything/</id>
+        
+        <content type="html">&lt;pre data-lang=&quot;html&quot; class=&quot;language-html &quot;&gt;&lt;code class=&quot;language-html&quot; data-lang=&quot;html&quot;&gt;&amp;lt;palestine&amp;gt;
+                       wh
+                      why
+                why I see y
+                why I see y
+              why I see yo
+             why I see you i
+             why I see  you i
+             why I see you
+            why I see you
+            why I see you
+           why I see you i
+           why I see you i
+          why I see you in
+         why I see you  in
+         why I see you  in
+        why I see you in e
+       why I see you in ev
+     why I see you in ever
+   why I see you in everth
+  why I see you in everthi
+ why I see you in everthi
+why I see you in everthi
+ why I see you in everth
+  why I see you in evert
+   why I see you in ev
+   why I see you in e
+    why I see you  in
+     why I see you i
+      why I see you
+      why I see you
+      why I see yo
+        why I  see
+        why I  see
+         why I  se
+          why I s
+          why I s
+           why I
+            why
+            wh
+            w
+&amp;lt;&amp;#x2F;palestine&amp;gt;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building ghit - Bonus 1</title>
+        <published>2023-09-24T00:00:00+00:00</published>
+        <updated>2023-09-24T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/ghit-bonus-1/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/ghit-bonus-1/</id>
+        
+        <content type="html">&lt;p&gt;I wanted to examine &lt;code&gt;Bazel&lt;&#x2F;code&gt; in my free time, and it may be a good fit for a multi-language and multi-platform project I&#x27;m working on. And that&#x27;s what Bazel is trying to solve.&lt;&#x2F;p&gt;
+&lt;p&gt;So here we go, &lt;code&gt;bazel&lt;&#x2F;code&gt; in &lt;code&gt;ghit&lt;&#x2F;code&gt; :D&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;workspace-setup&quot;&gt;Workspace Setup&lt;&#x2F;h2&gt;
+&lt;p&gt;I&#x27;ve installed &lt;code&gt;bazel&lt;&#x2F;code&gt; using &lt;code&gt;bazelisk&lt;&#x2F;code&gt;, then created &lt;code&gt;WORKSPACE.bazel&lt;&#x2F;code&gt; at the project&#x27;s root dir.&lt;&#x2F;p&gt;
+&lt;p&gt;Then I added the &lt;code&gt;rules_rust&lt;&#x2F;code&gt; by loading the &lt;code&gt;http_archive&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;starlark&quot; class=&quot;language-starlark &quot;&gt;&lt;code class=&quot;language-starlark&quot; data-lang=&quot;starlark&quot;&gt;# .&amp;#x2F;WORKSPACE.bazel
+load(&amp;quot;@bazel_tools&amp;#x2F;&amp;#x2F;tools&amp;#x2F;build_defs&amp;#x2F;repo:http.bzl&amp;quot;, &amp;quot;http_archive&amp;quot;)
+
+http_archive(
+    name = &amp;quot;rules_rust&amp;quot;,
+    sha256 = &amp;quot;db89135f4d1eaa047b9f5518ba4037284b43fc87386d08c1d1fe91708e3730ae&amp;quot;,
+    urls = [&amp;quot;https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;bazelbuild&amp;#x2F;rules_rust&amp;#x2F;releases&amp;#x2F;download&amp;#x2F;0.27.0&amp;#x2F;rules_rust-v0.27.0.tar.gz&amp;quot;],
+)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;code&gt;load&lt;&#x2F;code&gt; is similar to &lt;code&gt;import&lt;&#x2F;code&gt; in other languages. And the params of the &lt;code&gt;http_archive&lt;&#x2F;code&gt; I got those from &lt;code&gt;rules_rust&lt;&#x2F;code&gt; GitHub release. &lt;a href=&quot;https:&#x2F;&#x2F;github.com&#x2F;bazelbuild&#x2F;rules_rust&#x2F;releases&quot;&gt;https:&#x2F;&#x2F;github.com&#x2F;bazelbuild&#x2F;rules_rust&#x2F;releases&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;Now add &lt;code&gt;rules_rust&lt;&#x2F;code&gt; dependencies using &lt;code&gt;rules_rust_dependencies()&lt;&#x2F;code&gt; and register the rust toolchain.&lt;&#x2F;p&gt;
+&lt;p&gt;We can specify release channels, editions, and versions in the toolchain. I&#x27;ve only selected 2021&#x27;s edition.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;starlark&quot; class=&quot;language-starlark &quot;&gt;&lt;code class=&quot;language-starlark&quot; data-lang=&quot;starlark&quot;&gt;# .&amp;#x2F;WORKSPACE.bazel
+load(&amp;quot;@bazel_tools&amp;#x2F;&amp;#x2F;tools&amp;#x2F;build_defs&amp;#x2F;repo:http.bzl&amp;quot;, &amp;quot;http_archive&amp;quot;)
+
+http_archive(
+    name = &amp;quot;rules_rust&amp;quot;,
+    sha256 = &amp;quot;db89135f4d1eaa047b9f5518ba4037284b43fc87386d08c1d1fe91708e3730ae&amp;quot;,
+    urls = [&amp;quot;https:&amp;#x2F;&amp;#x2F;github.com&amp;#x2F;bazelbuild&amp;#x2F;rules_rust&amp;#x2F;releases&amp;#x2F;download&amp;#x2F;0.27.0&amp;#x2F;rules_rust-v0.27.0.tar.gz&amp;quot;],
+)
+
+load(&amp;quot;@rules_rust&amp;#x2F;&amp;#x2F;rust:repositories.bzl&amp;quot;, &amp;quot;rules_rust_dependencies&amp;quot;, &amp;quot;rust_register_toolchains&amp;quot;)
+
+rules_rust_dependencies()
+
+rust_register_toolchains(
+    edition = &amp;quot;2021&amp;quot;,
+)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Then, we need to list the dependencies we&#x27;re using. For example, if we&#x27;re using &lt;code&gt;anyhow&lt;&#x2F;code&gt;, we should put that in the &lt;code&gt;WORKSPACE.bazel&lt;&#x2F;code&gt;, but this is painful, so we&#x27;ll rely on &lt;code&gt;crate_universe&lt;&#x2F;code&gt; to do that for us!&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;starlark&quot; class=&quot;language-starlark &quot;&gt;&lt;code class=&quot;language-starlark&quot; data-lang=&quot;starlark&quot;&gt;load(&amp;quot;@rules_rust&amp;#x2F;&amp;#x2F;crate_universe:repositories.bzl&amp;quot;, &amp;quot;crate_universe_dependencies&amp;quot;)
+
+crate_universe_dependencies()
+
+load(&amp;quot;@rules_rust&amp;#x2F;&amp;#x2F;crate_universe:defs.bzl&amp;quot;, &amp;quot;crates_repository&amp;quot;)
+
+crates_repository(
+    name = &amp;quot;crate_index&amp;quot;,
+    cargo_lockfile = &amp;quot;&amp;#x2F;&amp;#x2F;:Cargo.lock&amp;quot;,
+    lockfile = &amp;quot;&amp;#x2F;&amp;#x2F;:cargo-bazel-lock.json&amp;quot;,
+    manifests = [
+        &amp;quot;&amp;#x2F;&amp;#x2F;:Cargo.toml&amp;quot;,
+        &amp;quot;&amp;#x2F;&amp;#x2F;:ghit_core&amp;#x2F;Cargo.toml&amp;quot;,
+        &amp;quot;&amp;#x2F;&amp;#x2F;:ghit_cli&amp;#x2F;Cargo.toml&amp;quot;,
+    ],
+)
+
+load(&amp;quot;@crate_index&amp;#x2F;&amp;#x2F;:defs.bzl&amp;quot;, &amp;quot;crate_repositories&amp;quot;)
+
+crate_repositories()
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;We gave the &lt;code&gt;crates_repository&lt;&#x2F;code&gt; a custom name, &lt;code&gt;crate_index&lt;&#x2F;code&gt;, and we specified the &lt;code&gt;cargo_lockfile&lt;&#x2F;code&gt; to be the actual &lt;code&gt;Cargo.lock&lt;&#x2F;code&gt; file since we&#x27;re using a cargo workspace then there&#x27;s only this single lock file. And we should specify bazel&#x27;s lockfile and create that later. And finally, set the &lt;code&gt;Cargo.toml&lt;&#x2F;code&gt; files. Bazel can automatically generate dependencies.&lt;&#x2F;p&gt;
+&lt;p&gt;Then I created &lt;code&gt;cargo-bazel-lock.json&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;touch cargo-bazel-lock.json
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And I&#x27;ve pinned the dependencies to that file.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;CARGO_BAZEL_REPIN=1 bazel sync --only=crate_index
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;When dependencies change, we should sync again.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;library-setup&quot;&gt;Library Setup&lt;&#x2F;h2&gt;
+&lt;p&gt;Now we want to setup our lib, which is &lt;code&gt;ghit_core&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;starlark&quot; class=&quot;language-starlark &quot;&gt;&lt;code class=&quot;language-starlark&quot; data-lang=&quot;starlark&quot;&gt;# .&amp;#x2F;ghit_core&amp;#x2F;BUILD.bazel
+
+load(&amp;quot;@crate_index&amp;#x2F;&amp;#x2F;:defs.bzl&amp;quot;, &amp;quot;aliases&amp;quot;, &amp;quot;all_crate_deps&amp;quot;)
+load(&amp;quot;@rules_rust&amp;#x2F;&amp;#x2F;rust:defs.bzl&amp;quot;, &amp;quot;rust_library&amp;quot;)
+
+rust_library(
+    name = &amp;quot;ghit_core&amp;quot;,
+    srcs = glob([
+        &amp;quot;src&amp;#x2F;**&amp;#x2F;*.rs&amp;quot;,
+    ]),
+    aliases = aliases(),
+    deps = all_crate_deps(),
+    visibility = [&amp;quot;&amp;#x2F;&amp;#x2F;visibility:public&amp;quot;],
+)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Here, I&#x27;ve included the &lt;code&gt;all_crate_deps&lt;&#x2F;code&gt; to also generate dependencies depending on what we provide in &lt;code&gt;Cargo.toml&lt;&#x2F;code&gt;, and the &lt;code&gt;aliases&lt;&#x2F;code&gt; here are needed in case we&#x27;ve used dependency renaming, say:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;ghit_lib = { package = &amp;quot;ghit_core&amp;quot;, path = &amp;quot;..&amp;#x2F;ghit_core&amp;quot; }
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Otherwise, we need to define our aliases explicitly.&lt;&#x2F;p&gt;
+&lt;p&gt;And finally, we&#x27;ve included the &lt;code&gt;rust_library&lt;&#x2F;code&gt; to build a rust lib. We give it a name, sources to be everything with &lt;code&gt;.rs&lt;&#x2F;code&gt; inside &lt;code&gt;src&#x2F;&lt;&#x2F;code&gt; recursively, and public visibility.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;binary-setup&quot;&gt;Binary Setup&lt;&#x2F;h2&gt;
+&lt;p&gt;Similar to the lib setup, we add the &lt;code&gt;ghit_core&lt;&#x2F;code&gt; as a dependency and use &lt;code&gt;rust_binary&lt;&#x2F;code&gt; instead of &lt;code&gt;rust_library&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;starlark&quot; class=&quot;language-starlark &quot;&gt;&lt;code class=&quot;language-starlark&quot; data-lang=&quot;starlark&quot;&gt;load(&amp;quot;@crate_index&amp;#x2F;&amp;#x2F;:defs.bzl&amp;quot;, &amp;quot;aliases&amp;quot;, &amp;quot;all_crate_deps&amp;quot;)
+load(&amp;quot;@rules_rust&amp;#x2F;&amp;#x2F;rust:defs.bzl&amp;quot;, &amp;quot;rust_binary&amp;quot;)
+
+rust_binary(
+    name = &amp;quot;ghit_cli&amp;quot;,
+    srcs = glob([
+        &amp;quot;src&amp;#x2F;**&amp;#x2F;*.rs&amp;quot;,
+    ]),
+    aliases = aliases(),
+    deps = all_crate_deps() + [
+        &amp;quot;&amp;#x2F;&amp;#x2F;ghit_core&amp;quot;
+    ],
+    visibility = [&amp;quot;&amp;#x2F;&amp;#x2F;visibility:public&amp;quot;],
+)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Finally, I created &lt;code&gt;BUILD.bazel&lt;&#x2F;code&gt; in the root dir, beside &lt;code&gt;WORKSPACE.bazel&lt;&#x2F;code&gt;, and I ran:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;bazel build &amp;#x2F;&amp;#x2F;ghit_cli:ghit_cli
+.&amp;#x2F;bazel-bin&amp;#x2F;ghit_cli&amp;#x2F;ghit_cli
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;hr &#x2F;&gt;
+&lt;h2 id=&quot;credits&quot;&gt;Credits&lt;&#x2F;h2&gt;
+&lt;p&gt;Thanks to &lt;a href=&quot;https:&#x2F;&#x2F;www.tweag.io&#x2F;blog&#x2F;2023-07-27-building-rust-workspace-with-bazel&#x2F;&quot;&gt;https:&#x2F;&#x2F;www.tweag.io&#x2F;blog&#x2F;2023-07-27-building-rust-workspace-with-bazel&#x2F;&lt;&#x2F;a&gt;. It helped a lot! (There is some missing stuff in their tutorial, but they provided a link to the repo, so I was able to fill in the blank).&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building ghit - Part 3</title>
+        <published>2023-09-14T00:00:00+00:00</published>
+        <updated>2023-09-14T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/ghit-part-3/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/ghit-part-3/</id>
+        
+        <content type="html">&lt;p&gt;It&#x27;s time to add the &lt;code&gt;commit&lt;&#x2F;code&gt; command.&lt;&#x2F;p&gt;
+&lt;p&gt;First, I&#x27;ve created a &lt;code&gt;workspace.rs&lt;&#x2F;code&gt; to list and read files.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;use crate::pathbuf;
+use crate::prelude::*;
+use std::fs;
+use std::fs::read_dir;
+use std::path::PathBuf;
+
+pub struct Workspace {
+    path: PathBuf,
+}
+
+impl Workspace {
+    pub fn new(path: PathBuf) -&amp;gt; Self {
+        Self { path }
+    }
+
+    pub fn list_files(&amp;amp;self) -&amp;gt; GhitResult&amp;lt;Vec&amp;lt;String&amp;gt;&amp;gt; {
+        let mut entries = Vec::new();
+        read_dir(&amp;amp;self.path)?
+            .into_iter()
+            .filter(|r| r.is_ok())
+            .map(|r| r.unwrap().path())
+            .filter(|r| r.is_file())
+            .for_each(|f| {
+                entries.push(f.to_string_lossy().to_string());
+            });
+        Ok(entries)
+    }
+
+    pub fn read_file(&amp;amp;self, file_name: PathBuf) -&amp;gt; GhitResult&amp;lt;String&amp;gt; {
+        let path = pathbuf![self.path.clone(), file_name];
+        let contents = fs::read_to_string(path)?;
+        Ok(contents)
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I then created a &lt;code&gt;blob.rs&lt;&#x2F;code&gt; that will take a file and make a blob out of it in the form of &lt;code&gt;blob &amp;lt;length&amp;gt;\0&amp;lt;content&amp;gt;&lt;&#x2F;code&gt;. The &lt;code&gt;\0&lt;&#x2F;code&gt; is null. It is being used as a delimiter.&lt;&#x2F;p&gt;
+&lt;p&gt;From that blob, we hash it using &lt;code&gt;sha1&lt;&#x2F;code&gt;, and there we go we have a blob in the format that satisfies our needs.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;use sha1::Digest;
+use sha1::Sha1;
+
+pub struct Blob {
+    _data: Box&amp;lt;str&amp;gt;,
+    content: Box&amp;lt;str&amp;gt;,
+    oid: Box&amp;lt;str&amp;gt;,
+}
+
+impl Blob {
+    pub fn new(data: &amp;amp;str) -&amp;gt; Self {
+        let data_str = String::from_utf8_lossy(&amp;amp;data.as_bytes()).to_string();
+        let content = format!(&amp;quot;{} {}\0{}&amp;quot;, Self::get_type(), data.len(), &amp;amp;data_str);
+
+        let mut hasher = Sha1::default();
+        hasher.update(&amp;amp;content.as_bytes());
+        let oid = format!(&amp;quot;{:x}&amp;quot;, hasher.finalize());
+
+        Self {
+            _data: data.into(),
+            content: content.into_boxed_str(),
+            oid: oid.into_boxed_str(),
+        }
+    }
+
+    pub fn get_type() -&amp;gt; Box&amp;lt;str&amp;gt; {
+        &amp;quot;blob&amp;quot;.into()
+    }
+
+    pub fn get_oid(&amp;amp;self) -&amp;gt; Box&amp;lt;str&amp;gt; {
+        self.oid.to_owned()
+    }
+
+    pub fn get_content(&amp;amp;self) -&amp;gt; Box&amp;lt;str&amp;gt; {
+        self.content.to_owned()
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And finally, I created &lt;code&gt;database.rs&lt;&#x2F;code&gt; that handles writing to disk. When we want to write a blob to the disk, we get the SHA1 digest, called &lt;code&gt;oid&lt;&#x2F;code&gt;. The first two characters will be the directory name, the rest will be the file name, and the file content will be the compressed version of the blob.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;use crate::blob::Blob;
+use crate::pathbuf;
+use crate::prelude::GhitResult;
+use flate2::write::ZlibEncoder;
+use flate2::Compression;
+use rand::distributions::Alphanumeric;
+use rand::Rng;
+use std::fs;
+use std::io::prelude::*;
+use std::path::PathBuf;
+
+pub struct Database {
+    path: PathBuf,
+}
+
+impl Database {
+    pub fn new(path: PathBuf) -&amp;gt; Self {
+        Self { path }
+    }
+
+    pub fn store(&amp;amp;self, blob: Blob) -&amp;gt; GhitResult&amp;lt;()&amp;gt; {
+        let content = blob.get_content();
+        let oid = blob.get_oid();
+        self.write_object(oid.into(), content.into())?;
+        Ok(())
+    }
+
+    fn write_object(&amp;amp;self, oid: String, content: String) -&amp;gt; GhitResult&amp;lt;()&amp;gt; {
+        let object_path = pathbuf![&amp;amp;self.path, &amp;amp;oid[0..2]];
+        fs::create_dir_all(&amp;amp;object_path)?;
+
+        let file_path = pathbuf![&amp;amp;object_path, &amp;amp;oid[2..]];
+        let temp_path = pathbuf![&amp;amp;object_path, Self::gen_random_name()];
+
+        let mut compressed = ZlibEncoder::new(Vec::new(), Compression::fast());
+        compressed.write_all(content.as_bytes())?;
+        let compressed_bytes = compressed.finish()?;
+
+        fs::write(&amp;amp;temp_path, compressed_bytes)?;
+        fs::rename(&amp;amp;temp_path, &amp;amp;file_path)?;
+
+        Ok(())
+    }
+
+    fn gen_random_name() -&amp;gt; String {
+        let random: String = rand::thread_rng()
+            .sample_iter(&amp;amp;Alphanumeric)
+            .take(6)
+            .map(char::from)
+            .collect();
+        format!(&amp;quot;tmp_obj_{random}&amp;quot;)
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;When saving to the disk, we first do the operation into a temporary file, once all is good we rename that file to the real thing. This will make our operations atomic.&lt;&#x2F;p&gt;
+&lt;p&gt;We can bundle all that and expose it from our &lt;code&gt;commit&lt;&#x2F;code&gt; function.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;pub fn commit() -&amp;gt; GhitResult&amp;lt;()&amp;gt; {
+    let current_dir = env::current_dir()?;
+    let git_dir = pathbuf![&amp;amp;current_dir, &amp;quot;.git&amp;quot;];
+    let db_dir = pathbuf![&amp;amp;git_dir, &amp;quot;objects&amp;quot;];
+
+    let workspace = Workspace::new(current_dir);
+    let database = Database::new(db_dir);
+
+    let files = workspace.list_files()?;
+    for f in &amp;amp;files {
+        let data = workspace.read_file(f.into())?;
+        let blob = Blob::new(&amp;amp;data);
+        database.store(blob)?;
+    }
+    Ok(())
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;The last thing I did was move the &lt;code&gt;init.rs&lt;&#x2F;code&gt; content to &lt;code&gt;ghit.rs&lt;&#x2F;code&gt; inside of &lt;code&gt;ghit_core&lt;&#x2F;code&gt; and make all our exposed APIs friendly. Since we had to have &lt;code&gt;ghit_core::init::init(&amp;amp;path)?;&lt;&#x2F;code&gt;. But then it will be &lt;code&gt;ghit_core::ghit::init(&amp;amp;path)?&lt;&#x2F;code&gt;. A solution to that is to export the functions from &lt;code&gt;lib.rs&lt;&#x2F;code&gt; so consumers don&#x27;t have to pass by &lt;code&gt;ghit.rs&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;mod blob;
+mod database;
+mod error;
+mod ghit;
+mod prelude;
+mod workspace;
+
+#[macro_use]
+mod macros;
+
+pub use ghit::commit;
+pub use ghit::init;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Enough with the core. Now the final touch is to add the command in our &lt;code&gt;ghit_cli&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;use clap::Subcommand;
+
+#[derive(Subcommand)]
+pub enum Ghit {
+    &amp;#x2F;&amp;#x2F;&amp;#x2F; Initializes a ghit repo
+    Init {
+        #[clap(default_value_t = String::new())]
+        path: String,
+    },
+    &amp;#x2F;&amp;#x2F;&amp;#x2F; Commit changes
+    Commit,
+}
+
+impl Ghit {
+    pub fn exec(&amp;amp;self) -&amp;gt; anyhow::Result&amp;lt;()&amp;gt; {
+        match self {
+            Self::Init { path } =&amp;gt; {
+                let ghit_dir = ghit_core::init(&amp;amp;path)?;
+                println!(
+                    &amp;quot;Initialized empty Ghit repository in {}&amp;quot;,
+                    ghit_dir.to_string_lossy()
+                );
+                Ok(())
+            }
+            Self::Commit =&amp;gt; {
+                ghit_core::commit()?;
+                Ok(())
+            }
+        }
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And run it:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;shell&quot; class=&quot;language-shell &quot;&gt;&lt;code class=&quot;language-shell&quot; data-lang=&quot;shell&quot;&gt;cargo ghit commit
+tree .git&amp;#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Output:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;text&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;.git&amp;#x2F;
+└── objects
+    ├── 0e
+    │   └── 2089b2d2dc76c01e97cadfa872afd7c3817682
+    └── 3f
+        └── 43469d4cc948d27cb3334af551a8134ad0ed60
+
+4 directories, 2 files
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>dev.to pronouns</title>
+        <published>2023-09-08T00:00:00+00:00</published>
+        <updated>2023-09-08T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/dev-to-pronouns/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/dev-to-pronouns/</id>
+        
+        <content type="html">&lt;p&gt;My pronous were &lt;code&gt;bin&#x2F;bash&lt;&#x2F;code&gt;, looks like I can&#x27;t be identified as a &lt;code&gt;bash&lt;&#x2F;code&gt; script :&#x2F;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;dev-to-profile.png&quot; alt=&quot;dev.to profile&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;img src=&quot;&#x2F;images&#x2F;dev-to-pronouns.png&quot; alt=&quot;email&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Hello glib</title>
+        <published>2023-09-04T00:00:00+00:00</published>
+        <updated>2023-09-04T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/hello-glib/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/hello-glib/</id>
+        
+        <content type="html">&lt;p&gt;I have minimal knowledge of &lt;code&gt;C&lt;&#x2F;code&gt; from university: Algorithms and Data Structure, Operating systems, and compiler design courses. But to be accurate, I haven&#x27;t felt I&#x27;m writing &lt;code&gt;C&lt;&#x2F;code&gt; correctly. I&#x27;ve been hearing about something called &lt;code&gt;glib&lt;&#x2F;code&gt; but didn&#x27;t bother having a look; I mean, it is a low-level &lt;code&gt;lib&lt;&#x2F;code&gt;. But after working with &lt;code&gt;GStreamer&lt;&#x2F;code&gt; that depends on &lt;code&gt;glib&lt;&#x2F;code&gt;, I became curious.&lt;&#x2F;p&gt;
+&lt;p&gt;First things first, linking sucks. Working with &lt;code&gt;C&lt;&#x2F;code&gt; will make me increasingly appreciate &lt;code&gt;Rust&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;The &lt;code&gt;main.c&lt;&#x2F;code&gt; file:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;#include &amp;lt;glib.h&amp;gt;
+#include &amp;lt;stdio.h&amp;gt;
+
+int main() {
+  GList* list = NULL;
+  list = g_list_append(list, &amp;quot;Hello world!&amp;quot;);
+  printf(&amp;quot;The first item is &amp;#x27;%s&amp;#x27;\n&amp;quot;, g_list_first(list)-&amp;gt;data);
+  return 0;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Then my &lt;code&gt;Makefile&lt;&#x2F;code&gt;:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;makefile&quot; class=&quot;language-makefile &quot;&gt;&lt;code class=&quot;language-makefile&quot; data-lang=&quot;makefile&quot;&gt;prog_name = trying-glib
+
+.PHONY: all
+
+all: compile run
+
+compile:
+	@mkdir -p build
+	@gcc -Wall main.c -o .&amp;#x2F;build&amp;#x2F;$(prog_name) $$(pkg-config --cflags --libs glib-2.0)
+
+run:
+	@.&amp;#x2F;build&amp;#x2F;$(prog_name)
+
+clean:
+	@rm -rf .&amp;#x2F;build
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now I can run &lt;code&gt;make&lt;&#x2F;code&gt;; the program should compile and run.&lt;&#x2F;p&gt;
+&lt;p&gt;And that&#x27;s a wrap!&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>master vs main branch</title>
+        <published>2023-08-28T00:00:00+00:00</published>
+        <updated>2023-08-28T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/master-vs-main/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/master-vs-main/</id>
+        
+        <content type="html">&lt;p&gt;In 2020, Github renamed the default branch from &lt;code&gt;master&lt;&#x2F;code&gt; to &lt;code&gt;main&lt;&#x2F;code&gt; because of &amp;quot;Cultural sensitivity.&amp;quot; People became way too sensitive and easily triggered. Well, the master-slave model will still be alive in the history of computer science—for example, the well-known master-slave network topology. I&#x27;m not against either the naming or the slave-free world. I like &lt;code&gt;main&lt;&#x2F;code&gt; better. Concurrency uses the &lt;code&gt;main&lt;&#x2F;code&gt; thread term. Thread&#x27;s spawn and join are similar to git&#x27;s branch and merge. So &lt;code&gt;main&lt;&#x2F;code&gt; feels better. But what bothers me is being sensitive to such naming. If people and companies are keen on slavery, ask your government to stop milking Africa and treat their people like Islam did.&lt;&#x2F;p&gt;
+&lt;p&gt;The Linux kernel (the most significant software project humanity has done so far) uses &lt;code&gt;master&lt;&#x2F;code&gt;. Try changing that!&lt;&#x2F;p&gt;
+&lt;p&gt;There is a saying by Linus Torvalds. I can&#x27;t find the exact words to it, but it means that some companies talk about the direction of political correctness to the extent of not being about software anymore.&lt;&#x2F;p&gt;
+&lt;p&gt;If I can rename the default branch on GitHub, it will name it &lt;code&gt;senpai&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>GStreamer First App in Rust</title>
+        <published>2023-08-26T00:00:00+00:00</published>
+        <updated>2023-08-26T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/gstreamer-first-app-rust/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/gstreamer-first-app-rust/</id>
+        
+        <content type="html">&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;&#x2F;h2&gt;
+&lt;p&gt;I&#x27;m on macOS and set up GStreamer by &lt;a href=&quot;https:&#x2F;&#x2F;docs.rs&#x2F;gstreamer&#x2F;latest&#x2F;gstreamer&#x2F;#gstreamer-binaries&quot;&gt;downloading GStreamer binaries&lt;&#x2F;a&gt;. I took this option instead of homebrew because Gstreamer said it&#x27;s broken :&#x2F;.&lt;&#x2F;p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;We recommend using the official GStreamer binaries over Homebrew, especially as GStreamer in Homebrew is currently broken.&lt;&#x2F;p&gt;
+&lt;&#x2F;blockquote&gt;
+&lt;p&gt;Then, I created a system link for dynamic libs to the local libs.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;sudo ln -s &amp;#x2F;Library&amp;#x2F;Frameworks&amp;#x2F;GStreamer.framework&amp;#x2F;Versions&amp;#x2F;1.0&amp;#x2F;lib&amp;#x2F;*.dylib &amp;#x2F;usr&amp;#x2F;local&amp;#x2F;lib&amp;#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Created a new rust bin project with &lt;code&gt;gstreamer&lt;&#x2F;code&gt; and &lt;code&gt;anyhow&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cargo new --bin
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;[dependencies]
+anyhow = &amp;quot;1.0.75&amp;quot;
+gst = { package = &amp;quot;gstreamer&amp;quot;, version = &amp;quot;0.21.0&amp;quot; }
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;first-gstreamer-app&quot;&gt;First GStreamer App&lt;&#x2F;h2&gt;
+&lt;p&gt;I have been reading GStreamer&#x27;s application development manual.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;https:&#x2F;&#x2F;gstreamer.freedesktop.org&#x2F;documentation&#x2F;application-development&#x2F;basics&#x2F;helloworld.html?gi-language=c#&quot;&gt;On this page, they talk about building your first GStreamer app in C.&lt;&#x2F;a&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I translated that to Rust and removed the parts regarding lifetimes, like handling bus events.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;use gst::glib;
+use gst::prelude::ElementExt;
+use gst::prelude::ElementExtManual;
+use gst::prelude::GstBinExtManual;
+use gst::traits::GstBinExt;
+use gst::traits::GstObjectExt;
+
+fn main() -&amp;gt; anyhow::Result&amp;lt;()&amp;gt; {
+    &amp;#x2F;&amp;#x2F; gst_init (&amp;amp;argc, &amp;amp;argv);
+    gst::init()?;
+
+    &amp;#x2F;&amp;#x2F; loop = g_main_loop_new (NULL, FALSE);
+    let main_loop = glib::MainLoop::new(None, false);
+
+    &amp;#x2F;&amp;#x2F; pipeline = gst_pipeline_new (&amp;quot;audio-player&amp;quot;);
+    let pipeline = gst::Pipeline::with_name(&amp;quot;audio-player&amp;quot;);
+
+    &amp;#x2F;&amp;#x2F; source = gst_element_factory_make (&amp;quot;filesrc&amp;quot;, &amp;quot;file-source&amp;quot;);
+    let source = gst::ElementFactory::make(&amp;quot;filesrc&amp;quot;)
+        .name(&amp;quot;file-source&amp;quot;)
+        &amp;#x2F;&amp;#x2F; g_object_set (G_OBJECT (source), &amp;quot;location&amp;quot;, &amp;quot;example.ogg&amp;quot;, NULL);
+        .property(&amp;quot;location&amp;quot;, &amp;quot;example.ogg&amp;quot;)
+        .build()?;
+
+    &amp;#x2F;&amp;#x2F; demuxer = gst_element_factory_make (&amp;quot;oggdemux&amp;quot;, &amp;quot;ogg-demuxer&amp;quot;);
+    let demuxer = gst::ElementFactory::make(&amp;quot;oggdemux&amp;quot;)
+        .name(&amp;quot;ogg-demuxer&amp;quot;)
+        .build()?;
+
+    &amp;#x2F;&amp;#x2F; decoder = gst_element_factory_make (&amp;quot;vorbisdec&amp;quot;, &amp;quot;vorbis-decoder&amp;quot;);
+    let decoder = gst::ElementFactory::make(&amp;quot;vorbisdec&amp;quot;)
+        .name(&amp;quot;vorbis-decoder&amp;quot;)
+        .build()?;
+
+    &amp;#x2F;&amp;#x2F; conv = gst_element_factory_make (&amp;quot;audioconvert&amp;quot;, &amp;quot;converter&amp;quot;);
+    let conv = gst::ElementFactory::make(&amp;quot;audioconvert&amp;quot;)
+        .name(&amp;quot;converter&amp;quot;)
+        .build()?;
+
+    &amp;#x2F;&amp;#x2F; sink = gst_element_factory_make (&amp;quot;autoaudiosink&amp;quot;, &amp;quot;audio-output&amp;quot;);
+    let sink = gst::ElementFactory::make(&amp;quot;autoaudiosink&amp;quot;)
+        .name(&amp;quot;audio-output&amp;quot;)
+        .build()?;
+
+    &amp;#x2F;&amp;#x2F; gst_bin_add_many (GST_BIN (pipeline), source, demuxer, decoder, conv, sink, NULL);
+    pipeline.add_many([&amp;amp;source, &amp;amp;demuxer, &amp;amp;decoder, &amp;amp;conv, &amp;amp;sink])?;
+
+    &amp;#x2F;&amp;#x2F; gst_element_link (source, demuxer);
+    source.link(&amp;amp;demuxer)?;
+
+    &amp;#x2F;&amp;#x2F; gst_element_link_many (decoder, conv, sink, NULL);
+    gst::Element::link_many([&amp;amp;decoder, &amp;amp;conv, &amp;amp;sink])?;
+
+    &amp;#x2F;&amp;#x2F; g_signal_connect (demuxer, &amp;quot;pad-added&amp;quot;, G_CALLBACK (on_pad_added), decoder);
+    demuxer.connect_pad_added(move |elem, _pad| {
+        _ = elem.link(&amp;amp;decoder);
+    });
+
+    &amp;#x2F;&amp;#x2F; gst_element_set_state (pipeline, GST_STATE_PLAYING);
+    pipeline.set_state(gst::State::Playing)?;
+
+    &amp;#x2F;&amp;#x2F; g_main_loop_run (loop);
+    main_loop.run();
+
+    &amp;#x2F;&amp;#x2F; gst_element_set_state (pipeline, GST_STATE_NULL);
+    pipeline.set_state(gst::State::Null)?;
+
+    Ok(())
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;&lt;img src=&quot;https:&#x2F;&#x2F;gstreamer.freedesktop.org&#x2F;documentation&#x2F;application-development&#x2F;basics&#x2F;images&#x2F;hello-world.png&quot; alt=&quot;pipeline&quot; &#x2F;&gt;&lt;&#x2F;p&gt;
+&lt;p&gt;I didn&#x27;t expect it just to work 😅. I&#x27;ll take that :D.&lt;&#x2F;p&gt;
+&lt;p&gt;Now, I can &lt;a href=&quot;https:&#x2F;&#x2F;blog.ghamza.dev&#x2F;posts&#x2F;rust-cli&#x2F;&quot;&gt;write a CLI app&lt;&#x2F;a&gt; leverage the GStreamer tool.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building ghit - Part 2</title>
+        <published>2023-08-25T00:00:00+00:00</published>
+        <updated>2023-08-25T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/ghit-part-2/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/ghit-part-2/</id>
+        
+        <content type="html">&lt;p&gt;I&#x27;ve created init function in the core, which takes a relative path, creates the &lt;code&gt;.git&lt;&#x2F;code&gt; directory, and returns the absolute path for the &lt;code&gt;.git&lt;&#x2F;code&gt; dir.&lt;&#x2F;p&gt;
+&lt;p&gt;We will create a &lt;code&gt;.git&lt;&#x2F;code&gt;, and inside it, we will create &lt;code&gt;objects&lt;&#x2F;code&gt; and &lt;code&gt;refs&lt;&#x2F;code&gt;. When running &lt;code&gt;git init&lt;&#x2F;code&gt;, we get a &lt;code&gt;.git&lt;&#x2F;code&gt; with &lt;code&gt;objects&lt;&#x2F;code&gt; and &lt;code&gt;refs&lt;&#x2F;code&gt;. We&#x27;re mimicing git ¯\&lt;em&gt;(ツ)&lt;&#x2F;em&gt;&#x2F;¯.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&amp;#x2F;&amp;#x2F;&amp;#x2F; Initializes a new Ghit repo at the provided relative path
+&amp;#x2F;&amp;#x2F;&amp;#x2F;
+&amp;#x2F;&amp;#x2F;&amp;#x2F; Returns the absolute path to the `.git` directory
+&amp;#x2F;&amp;#x2F;&amp;#x2F;
+&amp;#x2F;&amp;#x2F;&amp;#x2F; # Errors
+&amp;#x2F;&amp;#x2F;&amp;#x2F;
+&amp;#x2F;&amp;#x2F;&amp;#x2F; Returns an [`GhitError`] if the current working directory value is invalid. Possible cases:
+&amp;#x2F;&amp;#x2F;&amp;#x2F; - Current directory does not exist.
+&amp;#x2F;&amp;#x2F;&amp;#x2F; - There are insufficient permissions to access the current directory.
+pub fn init(repo_path: &amp;amp;str) -&amp;gt; GhitResult&amp;lt;PathBuf&amp;gt; {
+    let current_dir = std::env::current_dir()?;
+    let git_dir = pathbuf![current_dir, repo_path, &amp;quot;.git&amp;quot;];
+    fs::create_dir_all(&amp;amp;git_dir)?;
+    let directories = [&amp;quot;objects&amp;quot;, &amp;quot;refs&amp;quot;];
+    for dir in directories {
+        fs::create_dir(pathbuf![&amp;amp;git_dir, dir])?;
+    }
+    Ok(git_dir)
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Two things to notice here:&lt;&#x2F;p&gt;
+&lt;ol&gt;
+&lt;li&gt;The usage of &lt;code&gt;pathbuf![]&lt;&#x2F;code&gt; macro.&lt;&#x2F;li&gt;
+&lt;li&gt;The &lt;code&gt;?&lt;&#x2F;code&gt; operator.&lt;&#x2F;li&gt;
+&lt;&#x2F;ol&gt;
+&lt;p&gt;The &lt;code&gt;pathbuf![]&lt;&#x2F;code&gt; macro is a util macro I created to make it easier to create &lt;code&gt;PathBuf&lt;&#x2F;code&gt; objects with array-like syntax.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;#[macro_export]
+macro_rules! pathbuf {
+    ($($path: expr),*) =&amp;gt; {{
+        let mut pathbuf = ::std::path::PathBuf::new();
+        $(pathbuf.push($path);)*
+        pathbuf
+    }}
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And the &lt;code&gt;?&lt;&#x2F;code&gt; operator propagates errors so the client app can handle that and display the proper message.&lt;&#x2F;p&gt;
+&lt;p&gt;I&#x27;ve wrapped the &lt;code&gt;io&lt;&#x2F;code&gt; errors using the &lt;code&gt;thiserror&lt;&#x2F;code&gt; crate for error handling.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;#[derive(thiserror::Error, Debug)]
+pub enum GhitError {
+    #[error(&amp;quot;IO - {0}&amp;quot;)]
+    Io(#[from] std::io::Error),
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Bam! An out-of-the-box good enough error handling for our client when combining it with &lt;code&gt;anyhow&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;cli&quot;&gt;CLI&lt;&#x2F;h2&gt;
+&lt;p&gt;For this CLI tool, I&#x27;ve applied the same approach in &lt;a href=&quot;https:&#x2F;&#x2F;blog.ghamza.dev&#x2F;posts&#x2F;rust-cli&#x2F;&quot;&gt;my blog post&lt;&#x2F;a&gt; for building CLI tools in Rust.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;#[derive(Subcommand)]
+pub enum Ghit {
+    &amp;#x2F;&amp;#x2F;&amp;#x2F; Initializes a ghit repo
+    Init {
+        #[clap(default_value_t = String::new())]
+        path: String,
+    },
+}
+
+impl Ghit {
+    pub fn exec(&amp;amp;self) -&amp;gt; anyhow::Result&amp;lt;()&amp;gt; {
+        match self {
+            Self::Init { path } =&amp;gt; {
+                let ghit_dir = ghit_core::init::init(&amp;amp;path)?;
+                println!(
+                    &amp;quot;Initialized empty Ghit repository in {}&amp;quot;,
+                    ghit_dir.to_string_lossy()
+                );
+                Ok(())
+            }
+        }
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Also the same technique to alias commands.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;# .cargo&amp;#x2F;config.toml
+[alias]
+ghit = [&amp;quot;run&amp;quot;, &amp;quot;-rq&amp;quot;, &amp;quot;--bin&amp;quot;, &amp;quot;ghit_cli&amp;quot;, &amp;quot;--&amp;quot;]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Now, I can run it on the happy and error paths.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cargo ghit init
+# Initialized empty Ghit repository in &amp;#x2F;Users&amp;#x2F;hamzajadid&amp;#x2F;Workspace&amp;#x2F;ghit&amp;#x2F;.git
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir should_fail
+sudo chown root should_fail
+cargo ghit init should_fail
+# Error: IO - Permission denied (os error 13)
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Only this bit bothers me:&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;Init {
+    #[clap(default_value_t = String::new())]
+    path: String,
+},
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;By having a default, the help message looks janky.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cargo ghit init --help
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;text&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Initializes a ghit repo
+
+Usage: ghit_cli init [PATH]
+
+Arguments:
+  [PATH]  [default: ]
+
+Options:
+  -h, --help  Print help
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;A fix for it should be the first thing I discuss next time.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Building ghit - Part 1</title>
+        <published>2023-08-24T00:00:00+00:00</published>
+        <updated>2023-08-24T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/ghit-part-1/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/ghit-part-1/</id>
+        
+        <content type="html">&lt;p&gt;Building ghit (Ghamza git - ghit :D) in Rust. Indeed not a step-by-step tutorial, just following &lt;a href=&quot;https:&#x2F;&#x2F;shop.jcoglan.com&#x2F;building-git&#x2F;&quot;&gt;Bulding git book&lt;&#x2F;a&gt; but switched to Rust instead of Ruby and having a different architecture.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;the-architecture&quot;&gt;The Architecture&lt;&#x2F;h2&gt;
+&lt;p&gt;I made a cargo workspace. Each member of the workspace has its responsibility. I&#x27;ve created a &lt;code&gt;ghit_core&lt;&#x2F;code&gt; library, which, as the name stands, is a core library that should be reusable by other apps or libs—and created &lt;code&gt;ghit_cli&lt;&#x2F;code&gt;, which parses the CLI arguments and passes them to the &lt;code&gt;core&lt;&#x2F;code&gt;. This approach should be extensible; for the future, we may add &lt;code&gt;ghit_gui&lt;&#x2F;code&gt; that displays some nice diffs and buttons to make &lt;code&gt;ghit&lt;&#x2F;code&gt; operations.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;text&quot; class=&quot;language-text &quot;&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;+----------------------+
+|       ghit core      |
++----------------------+
+   ↑        ↑        ↑
+  uses     uses     uses
+   |        |        |
++-----+  +-----+  +-----+
+| cli |  | gui |  | web |
++-----+  +-----+  +-----+
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;setup&quot;&gt;Setup&lt;&#x2F;h2&gt;
+&lt;p&gt;I&#x27;ve set up a rust workspace by creating a directory and creating a rust &lt;code&gt;lib&lt;&#x2F;code&gt; and a &lt;code&gt;bin&lt;&#x2F;code&gt; and adding them as members.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;mkdir ghit
+cd ghit
+cargo new --lib ghit_core --vcs none
+cargo new --bin ghit_cli --vcs none
+touch Cargo.toml
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;toml&quot; class=&quot;language-toml &quot;&gt;&lt;code class=&quot;language-toml&quot; data-lang=&quot;toml&quot;&gt;[workspace]
+members = [&amp;quot;ghit_cli&amp;quot;, &amp;quot;ghit_core&amp;quot;]
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And then make &lt;code&gt;ghit_cli&lt;&#x2F;code&gt; depends on &lt;code&gt;ghit_core&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cargo add -p ghit_cli ghit_core --path ghit_core&amp;#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;For libraries, I use &lt;code&gt;thiserror&lt;&#x2F;code&gt; for error propagation, and for binaries, I use &lt;code&gt;anyhow&lt;&#x2F;code&gt;
+And &lt;code&gt;clap&lt;&#x2F;code&gt; with the &lt;code&gt;derive&lt;&#x2F;code&gt; feature for &lt;code&gt;ghit_cli&lt;&#x2F;code&gt; to parse command line args. (I&#x27;ve created a &lt;a href=&quot;https:&#x2F;&#x2F;blog.ghamza.dev&#x2F;posts&#x2F;rust-cli&#x2F;&quot;&gt;tutorial on how to create Rust CLI apps&lt;&#x2F;a&gt; some time ago).
+They&#x27;re famous in the Rust ecosystem.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;bash&quot; class=&quot;language-bash &quot;&gt;&lt;code class=&quot;language-bash&quot; data-lang=&quot;bash&quot;&gt;cargo add -p ghit_core thiserror
+cargo add -p ghit_cli anyhow
+cargo add -p ghit_cli clap --features derive
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;I&#x27;ve set up the error struct in the lib.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&amp;#x2F;* error.rs *&amp;#x2F;
+#[derive(thiserror::Error, Debug)]
+pub enum GhitError {}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&amp;#x2F;* prelude.rs *&amp;#x2F;
+pub use crate::error::GhitError;
+
+pub type GhitResult&amp;lt;T&amp;gt; = core::result::Result&amp;lt;T, GhitError&amp;gt;;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;And now I was good to go to start with the first &lt;code&gt;ghit&lt;&#x2F;code&gt; command, the &lt;code&gt;init&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Thoughts on goto</title>
+        <published>2023-08-23T00:00:00+00:00</published>
+        <updated>2023-08-23T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/thoughts-on-goto/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/thoughts-on-goto/</id>
+        
+        <content type="html">&lt;p&gt;I wanted to learn production C programming and was pointed towards reading simple FreeBSD utils, like &lt;code&gt;echo.c&lt;&#x2F;code&gt; and &lt;code&gt;cat.c&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;p&gt;&lt;a href=&quot;http:&#x2F;&#x2F;git.savannah.gnu.org&#x2F;gitweb&#x2F;?p=coreutils.git;a=blob_plain;f=src&#x2F;echo.c;hb=HEAD&quot;&gt;&lt;code&gt;echo.c&lt;&#x2F;code&gt;&lt;&#x2F;a&gt; should be easier so lemme start with that. Well, the &lt;code&gt;goto&lt;&#x2F;code&gt;s were a deal breaker. Who uses &lt;code&gt;goto&lt;&#x2F;code&gt; in 2023?&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;c&quot; class=&quot;language-c &quot;&gt;&lt;code class=&quot;language-c&quot; data-lang=&quot;c&quot;&gt;for (i = 0; temp[i]; i++)
+    switch (temp[i])
+    {
+    case &amp;#x27;e&amp;#x27;: case &amp;#x27;E&amp;#x27;: case &amp;#x27;n&amp;#x27;:
+        break;
+    default:
+        goto just_echo;
+    }
+
+if (i == 0)
+    goto just_echo;
+
+&amp;#x2F;* ... *&amp;#x2F;
+
+just_echo:
+
+  if (do_v9 || posixly_correct)
+    {
+      while (argc &amp;gt; 0)
+        {
+          char const *s = argv[0];
+          unsigned char c;
+&amp;#x2F;* ... *&amp;#x2F;
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;This is madness!&lt;&#x2F;p&gt;
+&lt;p&gt;Well, no. &lt;code&gt;goto&lt;&#x2F;code&gt; is a tool. Indeed it breaks the control flow. But sometimes, we do need to break it.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;try-catch-blocks&quot;&gt;try-catch blocks&lt;&#x2F;h2&gt;
+&lt;p&gt;Well, a &lt;code&gt;try-catch&lt;&#x2F;code&gt; block or &lt;code&gt;do-catch&lt;&#x2F;code&gt; in languages like Swift are an application of a &lt;code&gt;goto&lt;&#x2F;code&gt;. We go to the &lt;code&gt;catch&lt;&#x2F;code&gt; block if a failable operation fails. It crealy interrupts the control flow same as &lt;code&gt;goto&lt;&#x2F;code&gt; does, but people accept that because it has good deeds and can&#x27;t be abused as much as &lt;code&gt;goto&lt;&#x2F;code&gt;.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;static int failableFunc() throws Exception {
+    Exception up = new Exception();
+    throw up;
+}
+
+public static void main(String[] args) {
+    try {
+        failableFunc();
+        System.out.println(&amp;quot;Program will `goto` the catch block, so I&amp;#x27;m skipped&amp;quot;);
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Rust took another approach by making failable operations return a &lt;code&gt;Result&lt;&#x2F;code&gt; that can either be an &lt;code&gt;Ok(value)&lt;&#x2F;code&gt; or &lt;code&gt;Err(why)&lt;&#x2F;code&gt;. So we either have to handle the error on the same line and not interrupt the control flow or bubble up the error so we can handle the error in the high-level modules.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;labeled-loops&quot;&gt;labeled loops&lt;&#x2F;h2&gt;
+&lt;p&gt;Rust also breaks the control flow by having labeled loops, so we can break from the entirety of nested loops without having flags and smelly code.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;rust&quot; class=&quot;language-rust &quot;&gt;&lt;code class=&quot;language-rust&quot; data-lang=&quot;rust&quot;&gt;&amp;#x27;outer: loop {
+    println!(&amp;quot;Entered the outer loop&amp;quot;);
+
+    &amp;#x27;inner: loop {
+        println!(&amp;quot;Entered the inner loop&amp;quot;);
+
+        &amp;#x2F;&amp;#x2F; This would break only the inner loop
+        &amp;#x2F;&amp;#x2F;break;
+
+        &amp;#x2F;&amp;#x2F; This breaks the outer loop
+        break &amp;#x27;outer;
+    }
+
+    println!(&amp;quot;This point will never be reached&amp;quot;);
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Java also can label loops.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;java&quot; class=&quot;language-java &quot;&gt;&lt;code class=&quot;language-java&quot; data-lang=&quot;java&quot;&gt;outer: for(;;) {
+   inner: for(;;) {
+     break outer;
+   }
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;h2 id=&quot;cleanup&quot;&gt;Cleanup&lt;&#x2F;h2&gt;
+&lt;p&gt;Swift and Go uses &lt;code&gt;defer&lt;&#x2F;code&gt;, a block that runs at the end of a function to clean up resources, for example.&lt;&#x2F;p&gt;
+&lt;pre data-lang=&quot;swift&quot; class=&quot;language-swift &quot;&gt;&lt;code class=&quot;language-swift&quot; data-lang=&quot;swift&quot;&gt;func writeLog() {
+    let file = openFile()
+    defer { closeFile(file) } &amp;#x2F;* Will be executed at the end *&amp;#x2F;
+
+    &amp;#x2F;* write to file *&amp;#x2F;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;pre data-lang=&quot;go&quot; class=&quot;language-go &quot;&gt;&lt;code class=&quot;language-go&quot; data-lang=&quot;go&quot;&gt;func writeLog() {
+    f := createFile(&amp;quot;&amp;#x2F;tmp&amp;#x2F;defer.txt&amp;quot;)
+    defer closeFile(f)
+
+    &amp;#x2F;* write to file *&amp;#x2F;
+}
+&lt;&#x2F;code&gt;&lt;&#x2F;pre&gt;
+&lt;p&gt;Why Swift and Go have such a keyword? To have a single block of cleaning resources while multiple branches that lead to exit the function.&lt;&#x2F;p&gt;
+&lt;h2 id=&quot;conclution&quot;&gt;Conclution&lt;&#x2F;h2&gt;
+&lt;p&gt;&lt;code&gt;goto&lt;&#x2F;code&gt;s are similar to Rust&#x27;s unsafe, we should avoid them in our day-to-day, but when the time comes, they&#x27;re tools to help us solve problems.&lt;&#x2F;p&gt;
+&lt;p&gt;In fact, &lt;a href=&quot;https:&#x2F;&#x2F;stackoverflow.com&#x2F;a&#x2F;24476&#x2F;8943195&quot;&gt;Chris Gillum summarized the possible uses of &lt;code&gt;goto&lt;&#x2F;code&gt;&lt;&#x2F;a&gt;, which are:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Cleanly exiting a function (what Swift does)&lt;&#x2F;li&gt;
+&lt;li&gt;Exiting nested loops (what Java and Rust do)&lt;&#x2F;li&gt;
+&lt;li&gt;Low-level performance improvements (what system and game devs do)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;And maybe:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Error Handling using &lt;code&gt;try-catch&lt;&#x2F;code&gt; (But languages are adopting the function model with &lt;code&gt;Result&lt;&#x2F;code&gt;)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;So it turns out the &lt;code&gt;echo.c&lt;&#x2F;code&gt; uses goto to cleanly exiting a function.&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+    <entry xml:lang="en">
+        <title>Thoughts on React Native</title>
+        <published>2023-08-22T00:00:00+00:00</published>
+        <updated>2023-08-22T00:00:00+00:00</updated>
+        <author>
+          <name>Unknown</name>
+        </author>
+        <link rel="alternate" href="https://ghamza-babbling.github.io/thoughts-on-react-native/" type="text/html"/>
+        <id>https://ghamza-babbling.github.io/thoughts-on-react-native/</id>
+        
+        <content type="html">&lt;p&gt;I often find people comparing native Android and iOS vs. React Native (RN) and saying they&#x27;re more performant than RN. Well, if you need performance, use C.&lt;&#x2F;p&gt;
+&lt;p&gt;Don&#x27;t try convincing me that RN isn&#x27;t performant when your company&#x27;s app is less than half-scale than Discord&#x27;s built-on RN.&lt;&#x2F;p&gt;
+&lt;p&gt;Some of the reasons to consider RN:&lt;&#x2F;p&gt;
+&lt;ul&gt;
+&lt;li&gt;Less expensive&lt;&#x2F;li&gt;
+&lt;li&gt;You don&#x27;t need that much control (tho RN provides API to bridge the native realm and JS realm)&lt;&#x2F;li&gt;
+&lt;&#x2F;ul&gt;
+&lt;p&gt;And be reasonable when reading tech news. The tech market is about something other than using the correct tools tech-wise. It is about using the right tool for the job, market, and budget. When we hear that a company rewrote its backend in Rust&#x2F;C++ instead of TypeScript, that doesn&#x27;t mean TS is bad. It may mean that the company scaled enough so that the cost of computation taxing is more expensive than the engineering time saved from TS.&lt;&#x2F;p&gt;
+&lt;p&gt;In the company&#x27;s early stages, they adopt cheaper technologies. When they scale, they start adopting more expensive tech but correct ones. RN is famous in the startup and freelancing world. In contrast, native Android and iOS are used in medium-sized companies and startups. Big companies use system languages (C&#x2F;C++&#x2F;Rust) to create the core business logic and port it to other platforms.&lt;&#x2F;p&gt;
+&lt;p&gt;Indeed there are exceptions, like a startup targeting Apple&#x27;s ecosystem, so they use Swift intensively, or a startup targeting a non-mobile Android (like an android PoS).&lt;&#x2F;p&gt;
+</content>
+        
+    </entry>
+</feed>

@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>Hello glib</title>
+        
+        <meta name="title" content="Hello glib">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/hello-glib/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="Hello glib">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/hello-glib/">
+        <meta property="twitter:title" content="Hello glib">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/hello-glib/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/hello-glib/",
+                "@type":"WebSite",
+                "headline":"Hello glib",
+                "name":"Hello glib",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/hello-glib</p>
+<p class="post-meta"><time datetime="2023-09-04">2023-09-04</time></p>
+<h1>Hello glib</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<p>I have minimal knowledge of <code>C</code> from university: Algorithms and Data Structure, Operating systems, and compiler design courses. But to be accurate, I haven't felt I'm writing <code>C</code> correctly. I've been hearing about something called <code>glib</code> but didn't bother having a look; I mean, it is a low-level <code>lib</code>. But after working with <code>GStreamer</code> that depends on <code>glib</code>, I became curious.</p>
+<p>First things first, linking sucks. Working with <code>C</code> will make me increasingly appreciate <code>Rust</code>.</p>
+<p>The <code>main.c</code> file:</p>
+<pre data-lang="c" class="language-c "><code class="language-c" data-lang="c">#include &lt;glib.h&gt;
+#include &lt;stdio.h&gt;
+
+int main() {
+  GList* list = NULL;
+  list = g_list_append(list, &quot;Hello world!&quot;);
+  printf(&quot;The first item is &#x27;%s&#x27;\n&quot;, g_list_first(list)-&gt;data);
+  return 0;
+}
+</code></pre>
+<p>Then my <code>Makefile</code>:</p>
+<pre data-lang="makefile" class="language-makefile "><code class="language-makefile" data-lang="makefile">prog_name = trying-glib
+
+.PHONY: all
+
+all: compile run
+
+compile:
+	@mkdir -p build
+	@gcc -Wall main.c -o .&#x2F;build&#x2F;$(prog_name) $$(pkg-config --cflags --libs glib-2.0)
+
+run:
+	@.&#x2F;build&#x2F;$(prog_name)
+
+clean:
+	@rm -rf .&#x2F;build
+</code></pre>
+<p>Now I can run <code>make</code>; the program should compile and run.</p>
+<p>And that's a wrap!</p>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/glib">#glib</a>
+
+<a href="/tags/programming">#programming</a>
+
+<a href="/tags/c">#c</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        

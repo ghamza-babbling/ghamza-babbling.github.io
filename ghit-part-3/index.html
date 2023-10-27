@@ -1,0 +1,334 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>Building ghit - Part 3</title>
+        
+        <meta name="title" content="Building ghit - Part 3">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/ghit-part-3/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="Building ghit - Part 3">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/ghit-part-3/">
+        <meta property="twitter:title" content="Building ghit - Part 3">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/ghit-part-3/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/ghit-part-3/",
+                "@type":"WebSite",
+                "headline":"Building ghit - Part 3",
+                "name":"Building ghit - Part 3",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/ghit-part-3</p>
+<p class="post-meta"><time datetime="2023-09-14">2023-09-14</time></p>
+<h1>Building ghit - Part 3</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<p>It's time to add the <code>commit</code> command.</p>
+<p>First, I've created a <code>workspace.rs</code> to list and read files.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use crate::pathbuf;
+use crate::prelude::*;
+use std::fs;
+use std::fs::read_dir;
+use std::path::PathBuf;
+
+pub struct Workspace {
+    path: PathBuf,
+}
+
+impl Workspace {
+    pub fn new(path: PathBuf) -&gt; Self {
+        Self { path }
+    }
+
+    pub fn list_files(&amp;self) -&gt; GhitResult&lt;Vec&lt;String&gt;&gt; {
+        let mut entries = Vec::new();
+        read_dir(&amp;self.path)?
+            .into_iter()
+            .filter(|r| r.is_ok())
+            .map(|r| r.unwrap().path())
+            .filter(|r| r.is_file())
+            .for_each(|f| {
+                entries.push(f.to_string_lossy().to_string());
+            });
+        Ok(entries)
+    }
+
+    pub fn read_file(&amp;self, file_name: PathBuf) -&gt; GhitResult&lt;String&gt; {
+        let path = pathbuf![self.path.clone(), file_name];
+        let contents = fs::read_to_string(path)?;
+        Ok(contents)
+    }
+}
+</code></pre>
+<p>I then created a <code>blob.rs</code> that will take a file and make a blob out of it in the form of <code>blob &lt;length&gt;\0&lt;content&gt;</code>. The <code>\0</code> is null. It is being used as a delimiter.</p>
+<p>From that blob, we hash it using <code>sha1</code>, and there we go we have a blob in the format that satisfies our needs.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use sha1::Digest;
+use sha1::Sha1;
+
+pub struct Blob {
+    _data: Box&lt;str&gt;,
+    content: Box&lt;str&gt;,
+    oid: Box&lt;str&gt;,
+}
+
+impl Blob {
+    pub fn new(data: &amp;str) -&gt; Self {
+        let data_str = String::from_utf8_lossy(&amp;data.as_bytes()).to_string();
+        let content = format!(&quot;{} {}\0{}&quot;, Self::get_type(), data.len(), &amp;data_str);
+
+        let mut hasher = Sha1::default();
+        hasher.update(&amp;content.as_bytes());
+        let oid = format!(&quot;{:x}&quot;, hasher.finalize());
+
+        Self {
+            _data: data.into(),
+            content: content.into_boxed_str(),
+            oid: oid.into_boxed_str(),
+        }
+    }
+
+    pub fn get_type() -&gt; Box&lt;str&gt; {
+        &quot;blob&quot;.into()
+    }
+
+    pub fn get_oid(&amp;self) -&gt; Box&lt;str&gt; {
+        self.oid.to_owned()
+    }
+
+    pub fn get_content(&amp;self) -&gt; Box&lt;str&gt; {
+        self.content.to_owned()
+    }
+}
+</code></pre>
+<p>And finally, I created <code>database.rs</code> that handles writing to disk. When we want to write a blob to the disk, we get the SHA1 digest, called <code>oid</code>. The first two characters will be the directory name, the rest will be the file name, and the file content will be the compressed version of the blob.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use crate::blob::Blob;
+use crate::pathbuf;
+use crate::prelude::GhitResult;
+use flate2::write::ZlibEncoder;
+use flate2::Compression;
+use rand::distributions::Alphanumeric;
+use rand::Rng;
+use std::fs;
+use std::io::prelude::*;
+use std::path::PathBuf;
+
+pub struct Database {
+    path: PathBuf,
+}
+
+impl Database {
+    pub fn new(path: PathBuf) -&gt; Self {
+        Self { path }
+    }
+
+    pub fn store(&amp;self, blob: Blob) -&gt; GhitResult&lt;()&gt; {
+        let content = blob.get_content();
+        let oid = blob.get_oid();
+        self.write_object(oid.into(), content.into())?;
+        Ok(())
+    }
+
+    fn write_object(&amp;self, oid: String, content: String) -&gt; GhitResult&lt;()&gt; {
+        let object_path = pathbuf![&amp;self.path, &amp;oid[0..2]];
+        fs::create_dir_all(&amp;object_path)?;
+
+        let file_path = pathbuf![&amp;object_path, &amp;oid[2..]];
+        let temp_path = pathbuf![&amp;object_path, Self::gen_random_name()];
+
+        let mut compressed = ZlibEncoder::new(Vec::new(), Compression::fast());
+        compressed.write_all(content.as_bytes())?;
+        let compressed_bytes = compressed.finish()?;
+
+        fs::write(&amp;temp_path, compressed_bytes)?;
+        fs::rename(&amp;temp_path, &amp;file_path)?;
+
+        Ok(())
+    }
+
+    fn gen_random_name() -&gt; String {
+        let random: String = rand::thread_rng()
+            .sample_iter(&amp;Alphanumeric)
+            .take(6)
+            .map(char::from)
+            .collect();
+        format!(&quot;tmp_obj_{random}&quot;)
+    }
+}
+</code></pre>
+<p>When saving to the disk, we first do the operation into a temporary file, once all is good we rename that file to the real thing. This will make our operations atomic.</p>
+<p>We can bundle all that and expose it from our <code>commit</code> function.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">pub fn commit() -&gt; GhitResult&lt;()&gt; {
+    let current_dir = env::current_dir()?;
+    let git_dir = pathbuf![&amp;current_dir, &quot;.git&quot;];
+    let db_dir = pathbuf![&amp;git_dir, &quot;objects&quot;];
+
+    let workspace = Workspace::new(current_dir);
+    let database = Database::new(db_dir);
+
+    let files = workspace.list_files()?;
+    for f in &amp;files {
+        let data = workspace.read_file(f.into())?;
+        let blob = Blob::new(&amp;data);
+        database.store(blob)?;
+    }
+    Ok(())
+}
+</code></pre>
+<p>The last thing I did was move the <code>init.rs</code> content to <code>ghit.rs</code> inside of <code>ghit_core</code> and make all our exposed APIs friendly. Since we had to have <code>ghit_core::init::init(&amp;path)?;</code>. But then it will be <code>ghit_core::ghit::init(&amp;path)?</code>. A solution to that is to export the functions from <code>lib.rs</code> so consumers don't have to pass by <code>ghit.rs</code>.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">mod blob;
+mod database;
+mod error;
+mod ghit;
+mod prelude;
+mod workspace;
+
+#[macro_use]
+mod macros;
+
+pub use ghit::commit;
+pub use ghit::init;
+</code></pre>
+<p>Enough with the core. Now the final touch is to add the command in our <code>ghit_cli</code>.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use clap::Subcommand;
+
+#[derive(Subcommand)]
+pub enum Ghit {
+    &#x2F;&#x2F;&#x2F; Initializes a ghit repo
+    Init {
+        #[clap(default_value_t = String::new())]
+        path: String,
+    },
+    &#x2F;&#x2F;&#x2F; Commit changes
+    Commit,
+}
+
+impl Ghit {
+    pub fn exec(&amp;self) -&gt; anyhow::Result&lt;()&gt; {
+        match self {
+            Self::Init { path } =&gt; {
+                let ghit_dir = ghit_core::init(&amp;path)?;
+                println!(
+                    &quot;Initialized empty Ghit repository in {}&quot;,
+                    ghit_dir.to_string_lossy()
+                );
+                Ok(())
+            }
+            Self::Commit =&gt; {
+                ghit_core::commit()?;
+                Ok(())
+            }
+        }
+    }
+}
+</code></pre>
+<p>And run it:</p>
+<pre data-lang="shell" class="language-shell "><code class="language-shell" data-lang="shell">cargo ghit commit
+tree .git&#x2F;
+</code></pre>
+<p>Output:</p>
+<pre data-lang="text" class="language-text "><code class="language-text" data-lang="text">.git&#x2F;
+└── objects
+    ├── 0e
+    │   └── 2089b2d2dc76c01e97cadfa872afd7c3817682
+    └── 3f
+        └── 43469d4cc948d27cb3334af551a8134ad0ed60
+
+4 directories, 2 files
+</code></pre>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/building-git">#building_git</a>
+
+<a href="/tags/programming">#programming</a>
+
+<a href="/tags/rust">#rust</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        

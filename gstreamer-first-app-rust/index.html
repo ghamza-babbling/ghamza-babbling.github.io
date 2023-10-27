@@ -1,0 +1,214 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta content="IE=edge" http-equiv="X-UA-Compatible"/>
+        <meta content="text/html; charset=UTF-8" http-equiv="content-type"/>
+        <meta content="width=device-width, initial-scale=1" name="viewport"/>
+
+        
+        
+        
+
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        
+        
+        
+
+        <title>GStreamer First App in Rust</title>
+        
+        <meta name="title" content="GStreamer First App in Rust">
+        
+        <meta name="description" content="Just me writing words">
+        <meta name="generator" content="Zola v0.16.1">
+
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="https://ghamza-babbling.github.io/gstreamer-first-app-rust/">
+        <meta property="og:site_name" content="Ghamza babbling">
+        <meta property="og:title" content="GStreamer First App in Rust">
+        <meta property="og:description" content="Just me writing words">
+        <meta property="og:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+
+        
+        
+        <meta property="twitter:card" content="summary_large_image">
+        <meta property="twitter:url" content="https://ghamza-babbling.github.io/gstreamer-first-app-rust/">
+        <meta property="twitter:title" content="GStreamer First App in Rust">
+        <meta property="twitter:description" content="Just me writing words">
+        <meta property="twitter:image" content="https:&#x2F;&#x2F;ghamza-babbling.github.io&#x2F;images&#x2F;gray-icon.png">
+        
+        
+        <link rel="canonical" href="https://ghamza-babbling.github.io/gstreamer-first-app-rust/">
+        <link rel="shortcut icon" type="image/x-icon" href="https://ghamza-babbling.github.io/images/gray-icon.png">
+        <script type="application/ld+json">
+            {
+                "description":"Just me writing words",
+                "url":"https://ghamza-babbling.github.io/gstreamer-first-app-rust/",
+                "@type":"WebSite",
+                "headline":"GStreamer First App in Rust",
+                "name":"GStreamer First App in Rust",
+                
+                "@context":"https://schema.org"
+            }
+        </script>
+        
+        
+        
+        <link rel="alternate" type="application/atom+xml" title="RSS" href="https://ghamza-babbling.github.io/atom.xml">
+        
+        
+        
+        <link rel="stylesheet" href="https://ghamza-babbling.github.io/style.css"/>
+        
+    </head>
+    <body theme="auto">
+        <div class="w">
+            <header>
+                
+                <nav>
+                    
+                    <a href="/" >home</a>
+                    
+                    <a href="/tags" >tags</a>
+                    
+                    <a href="/atom.xml" >rss</a>
+                    
+                </nav>
+                
+                
+<p><a href="..">..</a>/gstreamer-first-app-rust</p>
+<p class="post-meta"><time datetime="2023-08-26">2023-08-26</time></p>
+<h1>GStreamer First App in Rust</h1>
+
+            </header>
+            <main class="page-content" aria-label="Content">
+                
+
+
+
+<h2 id="setup">Setup</h2>
+<p>I'm on macOS and set up GStreamer by <a href="https://docs.rs/gstreamer/latest/gstreamer/#gstreamer-binaries">downloading GStreamer binaries</a>. I took this option instead of homebrew because Gstreamer said it's broken :/.</p>
+<blockquote>
+<p>We recommend using the official GStreamer binaries over Homebrew, especially as GStreamer in Homebrew is currently broken.</p>
+</blockquote>
+<p>Then, I created a system link for dynamic libs to the local libs.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">sudo ln -s &#x2F;Library&#x2F;Frameworks&#x2F;GStreamer.framework&#x2F;Versions&#x2F;1.0&#x2F;lib&#x2F;*.dylib &#x2F;usr&#x2F;local&#x2F;lib&#x2F;
+</code></pre>
+<p>Created a new rust bin project with <code>gstreamer</code> and <code>anyhow</code>.</p>
+<pre data-lang="bash" class="language-bash "><code class="language-bash" data-lang="bash">cargo new --bin
+</code></pre>
+<pre data-lang="toml" class="language-toml "><code class="language-toml" data-lang="toml">[dependencies]
+anyhow = &quot;1.0.75&quot;
+gst = { package = &quot;gstreamer&quot;, version = &quot;0.21.0&quot; }
+</code></pre>
+<h2 id="first-gstreamer-app">First GStreamer App</h2>
+<p>I have been reading GStreamer's application development manual.</p>
+<p><a href="https://gstreamer.freedesktop.org/documentation/application-development/basics/helloworld.html?gi-language=c#">On this page, they talk about building your first GStreamer app in C.</a></p>
+<p>I translated that to Rust and removed the parts regarding lifetimes, like handling bus events.</p>
+<pre data-lang="rust" class="language-rust "><code class="language-rust" data-lang="rust">use gst::glib;
+use gst::prelude::ElementExt;
+use gst::prelude::ElementExtManual;
+use gst::prelude::GstBinExtManual;
+use gst::traits::GstBinExt;
+use gst::traits::GstObjectExt;
+
+fn main() -&gt; anyhow::Result&lt;()&gt; {
+    &#x2F;&#x2F; gst_init (&amp;argc, &amp;argv);
+    gst::init()?;
+
+    &#x2F;&#x2F; loop = g_main_loop_new (NULL, FALSE);
+    let main_loop = glib::MainLoop::new(None, false);
+
+    &#x2F;&#x2F; pipeline = gst_pipeline_new (&quot;audio-player&quot;);
+    let pipeline = gst::Pipeline::with_name(&quot;audio-player&quot;);
+
+    &#x2F;&#x2F; source = gst_element_factory_make (&quot;filesrc&quot;, &quot;file-source&quot;);
+    let source = gst::ElementFactory::make(&quot;filesrc&quot;)
+        .name(&quot;file-source&quot;)
+        &#x2F;&#x2F; g_object_set (G_OBJECT (source), &quot;location&quot;, &quot;example.ogg&quot;, NULL);
+        .property(&quot;location&quot;, &quot;example.ogg&quot;)
+        .build()?;
+
+    &#x2F;&#x2F; demuxer = gst_element_factory_make (&quot;oggdemux&quot;, &quot;ogg-demuxer&quot;);
+    let demuxer = gst::ElementFactory::make(&quot;oggdemux&quot;)
+        .name(&quot;ogg-demuxer&quot;)
+        .build()?;
+
+    &#x2F;&#x2F; decoder = gst_element_factory_make (&quot;vorbisdec&quot;, &quot;vorbis-decoder&quot;);
+    let decoder = gst::ElementFactory::make(&quot;vorbisdec&quot;)
+        .name(&quot;vorbis-decoder&quot;)
+        .build()?;
+
+    &#x2F;&#x2F; conv = gst_element_factory_make (&quot;audioconvert&quot;, &quot;converter&quot;);
+    let conv = gst::ElementFactory::make(&quot;audioconvert&quot;)
+        .name(&quot;converter&quot;)
+        .build()?;
+
+    &#x2F;&#x2F; sink = gst_element_factory_make (&quot;autoaudiosink&quot;, &quot;audio-output&quot;);
+    let sink = gst::ElementFactory::make(&quot;autoaudiosink&quot;)
+        .name(&quot;audio-output&quot;)
+        .build()?;
+
+    &#x2F;&#x2F; gst_bin_add_many (GST_BIN (pipeline), source, demuxer, decoder, conv, sink, NULL);
+    pipeline.add_many([&amp;source, &amp;demuxer, &amp;decoder, &amp;conv, &amp;sink])?;
+
+    &#x2F;&#x2F; gst_element_link (source, demuxer);
+    source.link(&amp;demuxer)?;
+
+    &#x2F;&#x2F; gst_element_link_many (decoder, conv, sink, NULL);
+    gst::Element::link_many([&amp;decoder, &amp;conv, &amp;sink])?;
+
+    &#x2F;&#x2F; g_signal_connect (demuxer, &quot;pad-added&quot;, G_CALLBACK (on_pad_added), decoder);
+    demuxer.connect_pad_added(move |elem, _pad| {
+        _ = elem.link(&amp;decoder);
+    });
+
+    &#x2F;&#x2F; gst_element_set_state (pipeline, GST_STATE_PLAYING);
+    pipeline.set_state(gst::State::Playing)?;
+
+    &#x2F;&#x2F; g_main_loop_run (loop);
+    main_loop.run();
+
+    &#x2F;&#x2F; gst_element_set_state (pipeline, GST_STATE_NULL);
+    pipeline.set_state(gst::State::Null)?;
+
+    Ok(())
+}
+</code></pre>
+<p><img src="https://gstreamer.freedesktop.org/documentation/application-development/basics/images/hello-world.png" alt="pipeline" /></p>
+<p>I didn't expect it just to work 😅. I'll take that :D.</p>
+<p>Now, I can <a href="https://blog.ghamza.dev/posts/rust-cli/">write a CLI app</a> leverage the GStreamer tool.</p>
+
+
+            </main>
+            <footer>
+                
+<p class="taxonomies">
+
+
+<a href="/tags/gstreamer">#gstreamer</a>
+
+<a href="/tags/programming">#programming</a>
+
+<a href="/tags/rust">#rust</a>
+
+
+
+
+</p>
+
+                
+            </footer>
+        </div>
+    </body>
+</html>
+        
